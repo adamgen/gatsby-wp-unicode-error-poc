@@ -14,12 +14,21 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: `gatsby-source-wordpress`,
       options: {
-        name: 'content',
-        path: `${__dirname}/src/content`
+        baseUrl: `wpexpert.co.il`,
+        protocol: `http`,
+        hostingWPCOM: false,
+        useACF: false
       }
     },
+    // {
+    //   resolve: 'gatsby-source-filesystem',
+    //   options: {
+    //     name: 'content',
+    //     path: `${__dirname}/src/content`
+    //   }
+    // },
     {
       resolve: 'gatsby-transformer-remark',
       options: {

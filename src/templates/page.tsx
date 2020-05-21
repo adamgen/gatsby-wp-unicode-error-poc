@@ -7,22 +7,11 @@ import IndexLayout from '../layouts'
 
 interface PageTemplateProps {
   data: {
-    site: {
-      siteMetadata: {
-        title: string
-        description: string
-        author: {
-          name: string
-          url: string
-        }
-      }
-    }
-    markdownRemark: {
-      html: string
-      excerpt: string
-      frontmatter: {
-        title: string
-      }
+    wordpressPost: {
+      id: string
+      path: string
+      title: string
+      content: string
     }
   }
 }
@@ -31,9 +20,9 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => (
   <IndexLayout>
     <Page>
       <Container>
-        <h1>{data.markdownRemark.frontmatter.title}</h1>
+        <h1>{data.wordpressPost.title}</h1>
         {/* eslint-disable-next-line react/no-danger */}
-        <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
+        <div dangerouslySetInnerHTML={{ __html: data.wordpressPost.content }} />
       </Container>
     </Page>
   </IndexLayout>
@@ -42,23 +31,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => (
 export default PageTemplate
 
 export const query = graphql`
-  query PageTemplateQuery($slug: String!) {
-    site {
-      siteMetadata {
-        title
-        description
-        author {
-          name
-          url
-        }
-      }
-    }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      excerpt
-      frontmatter {
-        title
-      }
+  query BlogPostByID($id: String!) {
+    wordpressPost(id: { eq: $id }) {
+      id
+      path
+      title
+      content
     }
   }
 `
